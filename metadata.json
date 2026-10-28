@@ -1,0 +1,6 @@
+{
+  "name": "OjasNutra",
+  "description": "Cellular Longevity & Botanical Alchemy — High-potency clinical nutraceuticals grounded in Ayurvedic botanical alchemy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

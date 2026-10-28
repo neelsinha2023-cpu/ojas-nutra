@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>OjasNutra — Cellular Longevity &amp; Botanical Alchemy</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #08110b;
+        color: #171d1a;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar { display: none; }
+
+    /* Petalyx Motion & Intro Styling */
+    body.intro {
+      overflow-x: hidden;
+    }
+    #backdrop-glow {
+      position: fixed;
+      inset: -10%;
+      background: radial-gradient(circle at 45% 20%, #173824 0%, #0c1c13 45%, #050b07 100%);
+      transform: scale(1.3);
+      filter: blur(18px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    #app {
+      position: relative;
+      z-index: 10;
+      border-radius: 0px;
+      overflow: hidden;
+      box-shadow: 0 35px 80px rgba(0,0,0,0.65);
+      background: #f5fbf5;
+    }
+
+    /* Drifting Clouds Keyframes */
+    @keyframes driftA {
+      0% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(38px, -14px, 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+    @keyframes driftB {
+      0% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(-46px, 18px, 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+    .drift-a { animation: driftA 18s ease-in-out infinite; will-change: transform; }
+    .drift-b { animation: driftB 22s ease-in-out infinite; will-change: transform; }
+
+    /* Frosted Glass & Squares */
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 16px 36px rgba(0, 20, 10, 0.35);
+    }
+    .glass-light {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+    .sq-field {
+      position: absolute;
+      inset: 0;
+      background-size: 56px 56px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      pointer-events: none;
+      animation: sqPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes sqPulse {
+      0% { opacity: 0.35; }
+      100% { opacity: 0.75; }
+    }
+
+    /* 3D Perspective Tunnel Hero Styles */
+    .tunnel-viewport {
+      perspective: 1200px;
+      perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
+    }
+    .tunnel-stage {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.12s ease-out;
+    }
+    .tunnel-card {
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
+    }
+    .tunnel-card:hover {
+      border-color: rgba(246, 190, 64, 0.75) !important;
+      box-shadow: 0 0 45px rgba(246, 190, 64, 0.3), 0 25px 50px rgba(0,0,0,0.8) !important;
+    }
+
+    /* Notched Ticket Styling */
+    .notched-card {
+      position: relative;
+      background: radial-gradient(130% 120% at 50% 0%, rgba(255,255,255,0.95) 0%, rgba(245,251,245,0.98) 100%);
+      mask-image: radial-gradient(circle at 0px center, transparent 11px, black 12px), radial-gradient(circle at 100% center, transparent 11px, black 12px);
+      -webkit-mask-image: radial-gradient(circle at 0px center, transparent 11px, black 12px), radial-gradient(circle at 100% center, transparent 11px, black 12px);
+    }
+
+    /* Interactive 3-Panel Daily Ritual Accordion */
+    .panel {
+      transition: flex-grow 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+      flex-grow: 0.45;
+      min-width: 0;
+    }
+    .panel.is-active {
+      flex-grow: 2.2;
+    }
+    .panel .panel-expanded-body {
+      opacity: 0;
+      max-height: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, max-height 0.45s ease;
+      overflow: hidden;
+    }
+    .panel.is-active .panel-expanded-body {
+      opacity: 1;
+      max-height: 600px;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .panel .panel-collapsed-label {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    .panel.is-active .panel-collapsed-label {
+      opacity: 0;
+      display: none;
+    }
+
+    /* Falling Petal Particles Animation */
+    @keyframes fall {
+      0% {
+        transform: translate3d(0, -30px, 0) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.85;
+      }
+      85% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translate3d(var(--tx, 40px), 360px, 0) rotate(var(--rot, 360deg));
+        opacity: 0;
+      }
+    }
+    .petal {
+      position: absolute;
+      background: radial-gradient(circle at 35% 35%, rgba(253, 222, 163, 0.95), rgba(135, 217, 144, 0.45));
+      border-radius: 65% 15% 70% 20% / 60% 30% 70% 35%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      pointer-events: none;
+      animation: fall var(--dur, 6s) linear infinite;
+    }
+
+    /* Split Headline Word Wrapper for Staggering */
+    .word-wrap {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: 0.05em;
+    }
+    .word-wrap .w {
+      display: inline-block;
+      will-change: transform, opacity;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005420",
+            "primary-container": "#1b6e32",
+            "primary-fixed": "#a3f6aa",
+            "primary-fixed-dim": "#87d990",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#9beea3",
+            "on-primary-fixed": "#002108",
+            "on-primary-fixed-variant": "#00531f",
+            "secondary": "#7a5900",
+            "secondary-container": "#fdc346",
+            "secondary-fixed": "#ffdea3",
+            "secondary-fixed-dim": "#f6be40",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#705100",
+            "on-secondary-fixed": "#261900",
+            "tertiary": "#384d37",
+            "tertiary-container": "#4f654e",
+            "tertiary-fixed": "#d0e9cc",
+            "surface": "#f5fbf5",
+            "surface-dim": "#d5dcd6",
+            "surface-bright": "#f5fbf5",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#eff5ef",
+            "surface-container": "#e9efea",
+            "surface-container-high": "#e4eae4",
+            "surface-container-highest": "#dee4de",
+            "inverse-surface": "#2c322e",
+            "inverse-on-surface": "#ecf2ed",
+            "outline": "#707a6e",
+            "outline-variant": "#bfc9bc",
+            "on-surface": "#171d1a",
+            "on-surface-variant": "#40493f",
+            "error-container": "#ffdad6"
+          },
+          fontFamily: {
+            "display-hero": ["Bodoni Moda", "serif"],
+            "headline-lg": ["Bodoni Moda", "serif"],
+            "headline-md": ["Bodoni Moda", "serif"],
+            "headline-sm": ["Bodoni Moda", "serif"],
+            "body-lg": ["Inter Tight", "Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter Tight", "Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Inter Tight", "Plus Jakarta Sans", "sans-serif"],
+            "title-lg": ["Inter Tight", "Plus Jakarta Sans", "sans-serif"],
+            "title-md": ["Inter Tight", "Plus Jakarta Sans", "sans-serif"],
+            "label-md": ["Inter Tight", "Plus Jakarta Sans", "sans-serif"],
+            "label-sm": ["Inter Tight", "Plus Jakarta Sans", "sans-serif"]
+          },
+          spacing: {
+            "margin-mobile": "1.25rem",
+            "margin": "3rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem"
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="intro antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed font-body-md text-on-surface">
+<!-- Fixed Ambient Blurred Background Backdrop (Petalyx Signature Entrance) -->
+<div id="backdrop-glow"></div>
+<!-- Primary Outer Wrapper Container (#app) -->
+<div class="w-full" id="app">
+<!-- 0. TOP PERSISTENT ANNOUNCEMENT & FLOATING GLASS HEADER -->
+<div class="fixed top-0 left-0 right-0 z-50">
+<div class="w-full bg-inverse-surface/95 backdrop-blur-md text-inverse-on-surface py-2 px-margin-mobile md:px-margin text-center text-[11px] font-semibold uppercase tracking-widest flex items-center justify-center gap-space-sm border-b border-white/5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary-fixed-dim animate-pulse"></span>
+<span>Complimentary Climate-Neutral Shipping on Orders Above ₹750 • 100% Lab Verified Liposomal Purity</span>
+</div>
+<header class="w-full bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-b border-outline-variant/30">
+<div class="h-20 max-w-7xl mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-space-md">
+<!-- Logo Block with Authentic Brand Logo https://lh3.googleusercontent.com/aida-public/AB6AXuD6Sxcvt2ILsbSagpuwSdGXTauMYzf-XhKqLiQo33mCpvYsZhtp3t9j9lw1sp2CpDwSvxqjCyXlHHEWw2XGHCDIudf7UFuXk6HnORPnj63Y8lwsOf5nkrrmeVhxq5dFP8ntcjodQXyZn80-TMCSsEHar5i15FWqLJFPuAhSGKuIJreNlHcZaRAUGGoWBUI7zpTEN8r0KBc7gHx5HaOO4FOF-NfW8hSWMbrmptSWn2vO3gaZ6HgxKOBRVg -->
+<div class="flex items-center gap-space-md">
+<a class="flex items-center gap-3 group" data-path="home" href="#">
+<div class="relative flex items-center justify-center h-12 w-auto">
+<img alt="OjasNutra Official Brand Logo" class="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Sxcvt2ILsbSagpuwSdGXTauMYzf-XhKqLiQo33mCpvYsZhtp3t9j9lw1sp2CpDwSvxqjCyXlHHEWw2XGHCDIudf7UFuXk6HnORPnj63Y8lwsOf5nkrrmeVhxq5dFP8ntcjodQXyZn80-TMCSsEHar5i15FWqLJFPuAhSGKuIJreNlHcZaRAUGGoWBUI7zpTEN8r0KBc7gHx5HaOO4FOF-NfW8hSWMbrmptSWn2vO3gaZ6HgxKOBRVg"/>
+</div>
+<div class="hidden sm:flex flex-col border-l border-outline-variant/40 pl-3">
+<span class="font-headline-sm text-[20px] font-semibold tracking-tight text-on-surface group-hover:text-primary transition-colors">OjasNutra</span>
+<span class="text-[9px] text-primary tracking-widest uppercase font-bold -mt-0.5">Cellular Botanical Alchemy</span>
+</div>
+</a>
+</div>
+<!-- Desktop Navigation with Pill Active Styles -->
+<nav class="hidden lg:flex items-center gap-8 bg-surface-container/60 px-6 py-2 rounded-full border border-outline-variant/30">
+<a aria-current="page" class="transition-colors py-1 px-3 rounded-full bg-surface-container-lowest text-primary font-semibold text-sm shadow-sm" data-path="home" href="#">Home</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="shop" href="#collection">Shop</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="ritual" href="#ritual">Daily Ritual</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="our-science" href="#science">Our Science</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="about-us" href="#circle">Atelier &amp; Circle</a>
+</nav>
+<!-- Header Right Actions -->
+<div class="flex items-center gap-space-sm sm:gap-space-md">
+<button aria-label="Search Formulas" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-xl">search</span>
+</button>
+<button aria-label="Customer Portal" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-xl">account_circle</span>
+</button>
+<a aria-label="Shopping Cart" class="relative w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="cart" href="#collection">
+<span class="material-symbols-outlined text-xl">shopping_bag</span>
+<span class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-on-secondary text-[10px] font-bold shadow-[0_0_8px_rgba(253,195,70,0.6)]">4</span>
+</a>
+<div class="pl-1 hidden sm:block">
+<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-container/15 text-primary font-bold text-xs border border-primary/20">OJ</span>
+</div>
+</div>
+</div>
+</header>
+</div>
+<!-- MAIN BODY CONTENT -->
+<main class="w-full pt-28 bg-surface">
+<div class="flex flex-col w-full">
+<!-- 1. IMMERSIVE 3D PERSPECTIVE TUNNEL HERO CORRIDOR -->
+<section class="relative w-full h-[94vh] min-h-[700px] max-h-[960px] overflow-hidden bg-gradient-to-b from-[#040906] via-[#08150d] to-[#0c1e13] text-inverse-on-surface -mt-28 flex items-center justify-center select-none" id="tunnelHero">
+<!-- Subtle Matrix Grid -->
+<div class="sq-field opacity-60"></div>
+<!-- Drifting Mist Atmospheres -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute -top-20 left-1/4 w-[600px] h-[600px] bg-primary-container/20 rounded-full blur-[140px]"></div>
+<div class="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-secondary-fixed/15 rounded-full blur-[160px]"></div>
+</div>
+<!-- Floating Frosted Glass Ambient Badges -->
+<div class="absolute top-36 left-6 md:left-14 w-32 h-32 rounded-3xl glass rotate-12 drift-a pointer-events-none hidden sm:flex flex-col items-center justify-center text-center p-3 z-30">
+<span class="material-symbols-outlined text-secondary-fixed text-2xl mb-1">eco</span>
+<span class="text-[9px] uppercase tracking-wider text-outline-variant font-bold">Cold Active</span>
+<span class="text-[11px] font-semibold text-inverse-on-surface mt-0.5">Bio-Identical</span>
+</div>
+<div class="absolute bottom-24 right-8 md:right-16 w-36 h-36 rounded-3xl glass -rotate-6 drift-b pointer-events-none hidden md:flex flex-col items-center justify-center text-center p-3 z-30">
+<span class="font-headline-sm text-lg text-primary-fixed font-bold">99.4%</span>
+<span class="text-[9px] text-outline-variant uppercase tracking-wider">Bioavailability</span>
+<span class="text-[10px] text-secondary-fixed font-semibold mt-1">Liposomal Matrix</span>
+</div>
+<!-- 3D Perspective Tunnel Viewport & Corridor Stage -->
+<div class="tunnel-viewport absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden z-10" id="tunnelViewport">
+<div class="tunnel-stage relative w-full h-full flex items-center justify-center" id="tunnelStage">
+<!-- Tunnel Cards dynamically rendered with CSS 3D translate3d transforms -->
+<!-- Card 1: Sea Buckthorn Gummies -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-secondary-fixed/30 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="0" data-x="-380" data-y="-120">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-fixed/20 text-secondary-fixed text-[10px] font-bold uppercase tracking-wider">Formulation · 01</span>
+<span class="text-xs font-bold text-secondary-fixed">₹799</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center p-3 relative group">
+<img alt="Sea Buckthorn Gummies" class="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKdOMN7grVTjCzcy0vSMT1PvSOPQueIQf4eJWkKvhKmfOqp73h0nACsyEstN7pr2AQDRW3Uai5Ui4qRVPaZrXLCv5N8ieITDguyTSNfdYo-KpXsWeFNi9PbGKJE2rjtr2jVH4pngQYnr7nG4mEeBE5mrICzhdeFKwnGG0S8CN6hHBm850nfBlrDCpE3dzXdeX_z3tYzqXxSB5IYPO1NM0KTEJ1nvcND6OqIs4U_Fz9Ho_DT-0CgZvjHQ"/>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-[9px] text-primary-fixed font-medium">Sugar Free · Vegan</span>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Sea Buckthorn Gummies</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">Omega 7 &amp; Radiant Cellular Glow</p>
+</div>
+</div>
+<!-- Card 2: Liposomal Glutathione Gummies -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-primary-fixed/40 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="-350" data-x="360" data-y="-160">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed/20 text-primary-fixed text-[10px] font-bold uppercase tracking-wider">Flagship Actives</span>
+<span class="text-xs font-bold text-primary-fixed">₹799</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center p-3 relative">
+<img alt="Liposomal Glutathione Gummies" class="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxJ3oeukiNLRQ46hFOAHvleFTu_nhDDSNT97YfZ3q_1nc1vijcD-L9RgZt2FsxqS2JV1ivduA38LgC0qcsliebNJoSR-as1LHAMvkwoKIgsA7eTnxA8jdY1YqPW8aovBtm51jYPPdYXJMjaergvh4kNBz6eGb-2wZnYOlqBeIzwiCVZaEWVw3p_BKfTNEBVEUxoy-6em-Lb94tuTRB-KKzwUzeWnRmElDEZm7ihYduOAZNEz4qups9ww"/>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-[9px] text-secondary-fixed font-medium">Master Antioxidant</span>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Liposomal Glutathione</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">Mitochondrial ATP &amp; Skin Vigor</p>
+</div>
+</div>
+<!-- Card 3: Eye Care Gummies -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-secondary-fixed/30 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="-700" data-x="-420" data-y="140">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-fixed/20 text-secondary-fixed text-[10px] font-bold uppercase tracking-wider">Circadian Midday</span>
+<span class="text-xs font-bold text-secondary-fixed">₹699</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center p-3 relative">
+<img alt="Eye Care Gummies" class="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAewOT7a5RS11_f5umoA1OAC5xr8veQgrglvk3WQEZ7d-19oWsMyDCsxhTj_78Vp_hsCaA7jNCes3dUUdxpI_BSzLgq6iu5evFOSTD0Xx2IlE7oyG8RZlDiiMZP2bSAi3SHoN9rtIqm5ZXKGLb1yOEDv2GAGuKfsaOzcpQnYrFnYGTvksCgvr9JlGO6N0lZIpazmEKQNNFE2Bub_LqU0bakxE8DcaHUWWD07WBZOWmDLT7YbTsP_fxoPw"/>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-[9px] text-primary-fixed font-medium">Lutein + Zeaxanthin</span>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Eye Care Gummies</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">Blue Light Protection &amp; Macula</p>
+</div>
+</div>
+<!-- Card 4: Apple Cider Vinegar Gummies -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-error-container/30 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="-1050" data-x="400" data-y="130">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-error-container/20 text-error-container text-[10px] font-bold uppercase tracking-wider">Metabolic Loop</span>
+<span class="text-xs font-bold text-secondary-fixed">₹699</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center p-3 relative">
+<img alt="Apple Cider Vinegar Gummies" class="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVo2pzhpmTG_jMhnyScpc_LUxqd_fCTGu--myGHr_5UyEj_TKCcTlhXRZQrY0z9V-BbfSgId9CIxoAkB_g3q_yITZcvG_4Zh9Imbj__QpU3s2Mlg__feoHAJpYvHtpy2hCpX6i0hJiAJ0ypxzKXYQ3tcZodw2a_-vHYBfGATLfDHEAJOj8KBngqOMDOGAspSaiJrejjMao-YI2Hur-uALaOpY5EjbG1e3rBrQ-L64FnONI_oWkBoD_ig"/>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-[9px] text-secondary-fixed font-medium">Mother Ferment Active</span>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Apple Cider Vinegar</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">Metabolic Balance &amp; Digestion</p>
+</div>
+</div>
+<!-- Card 5: Botanical Lab Extraction Atelier -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-white/20 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="-1400" data-x="-320" data-y="-180">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed/20 text-primary-fixed text-[10px] font-bold uppercase tracking-wider">Atelier Science</span>
+<span class="text-[10px] font-semibold text-outline-variant">ISO 17025</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center relative">
+<img alt="Atelier Extraction Facility" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WPbAWRHbNuXpg2ATigGa31I_bK9pPU3RUdZWdpG_dkkHFDNwRrgVnI4nn6lzX3NjXDJt6uykrgsKKvtATPOH-NLW1JHkrGda94Q938ipSH3-cRv2F9Wpc5J9fDkqAzyuMM41i3Fs_D8sTl_YbawImPRzbX-dP4UUQneiGtQTyyu8w_DF6K3iqIgUHBu_nQIUgrUeFIe1OZ1fE46_vev0Hrr8q-nnNGZ_so2JDkFuBZkMR7fognOXLDtdRF"/>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Supercritical CO₂ Lab</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">Zero Solvents · Pure Extracts</p>
+</div>
+</div>
+<!-- Card 6: 3D Luxury Elixir Showcase -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-secondary-fixed/30 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="-1750" data-x="330" data-y="-110">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-fixed/20 text-secondary-fixed text-[10px] font-bold uppercase tracking-wider">Cellular Elixirs</span>
+<span class="text-[10px] font-semibold text-secondary-fixed">Micro-Batch</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center relative">
+<img alt="Luxury Elixir Showcase" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WTXU4SlXOE4Z3cpRCa7Vpj-6BOnOgU9T1yG1vpCYWiqsVMvMkxKx7ADgsDNyFL69t62ZbjaDWTSQB35c_WSyPYI46q2oHJah3SFZbLY9nSU8smdR-LO28yxEUsmq2SXSPUZb07hUqCexgrZ-gRYKbXLAAws1q43L2mSHestLQu3jF029uwKNV_cjvdY-bGQfZtU4_x6WRB54jzhsTUVlbCOVeamOSszk7NuEfPigKtglm2_d3tU9ghkrnE"/>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Bioactive Infusions</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">High-Potency Longevity Drops</p>
+</div>
+</div>
+<!-- Card 7: Amber Botanical Bottles -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-white/20 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="-2100" data-x="-280" data-y="160">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-white/15 text-outline-variant text-[10px] font-bold uppercase tracking-wider">Photoprotective</span>
+<span class="text-[10px] font-semibold text-outline-variant">Amber Glass</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center relative">
+<img alt="Amber Botanical Glass" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VABNpFT44hGBunCCzLPb1XYwVCcg9kyZQx8nxXUNSI967P_9LqH3jVmnAQmB6z541gYLaex5iG2DFZ34XLEHG3J5rMCrbAM2-nsYH-07Urc73PtMdAtw_QyzoqbB9ZygsXmrlZWB4VUuJ0OcCIhdkmhhy1LrtCvwCcZoXUvACDOFiIUyDNyoonvP_WJKBU0lueuVLNAccUhBjFPqIuz3YBoQu6z-obPLKjmqRXnzSaTTK30E-wOO_aLVc"/>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Living Plant Extracts</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">UV-Shielded Active Molecules</p>
+</div>
+</div>
+<!-- Card 8: Travertine Stone Botanicals -->
+<div class="tunnel-card absolute w-[280px] sm:w-[320px] rounded-3xl p-5 glass border border-primary-fixed/30 cursor-pointer shadow-2xl flex flex-col justify-between" data-depth="-2450" data-x="280" data-y="170">
+<div class="flex items-center justify-between mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed/20 text-primary-fixed text-[10px] font-bold uppercase tracking-wider">Trio Regimen</span>
+<span class="text-[10px] font-semibold text-primary-fixed">Daily Vital</span>
+</div>
+<div class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/30 flex items-center justify-center relative">
+<img alt="Travertine Botanicals" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1Wgz74jZle62WjZ7gWAJrtk4JU4Mbi8ZOqGGIevO6ecdTkmVPu_qjJlZDSDC-mCgciuUF5DsHi_KgiBF0y8nB--MlVSBvRcM0dUeNUDF4WCNAFEL6WSqENhqtN9ucasxDIn3NKat3gj1o7shLKpBQWQxIPRn0TslnLpsr5zsyEahFBG6YMuH82osV_i_bBEBB07kadle4KNG8M3UkdMi1b0kiP52OEQjuYfR9u0Y47YWSCfTflguILE0ck"/>
+</div>
+<div class="mt-3">
+<h4 class="font-headline-sm text-base text-inverse-on-surface font-semibold leading-tight">Daily Synergy Trilogy</h4>
+<p class="text-[11px] text-outline-variant mt-0.5">Essential Cellular Foundation</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Central Hero Content: Anchored in Forefront with Glass Layer & CTAs -->
+<div class="relative z-20 max-w-4xl mx-auto px-margin-mobile text-center flex flex-col items-center pointer-events-auto">
+<!-- Pill Badge -->
+<div class="hero-badge inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-primary-fixed/25 text-primary-fixed text-xs font-semibold tracking-widest uppercase shadow-[0_0_20px_rgba(163,246,170,0.15)] mb-6">
+<span class="w-2 h-2 rounded-full bg-primary-fixed animate-ping"></span>
+<span>Cellular Longevity · Into The Living Botanical Ether</span>
+</div>
+<!-- Monumental Headline with Editorial Typography -->
+<h1 class="hero-title font-display-hero text-4xl sm:text-6xl lg:text-[68px] text-inverse-on-surface tracking-tight leading-[1.08] mb-6 drop-shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
+<span class="word-wrap"><span class="w">Warp</span></span>
+<span class="word-wrap"><span class="w">Into</span></span>
+<span class="word-wrap"><span class="w italic font-normal text-secondary-fixed">Cellular</span></span><br class="hidden sm:inline"/>
+<span class="word-wrap"><span class="w">Longevity.</span></span>
+</h1>
+<!-- Precision Sub-copy -->
+<p class="hero-sub font-body-lg text-base sm:text-lg text-outline-variant max-w-2xl font-light leading-relaxed mb-8 drop-shadow-md">
+    Step through the living molecular corridor of bio-identical gummies, wild-harvested Himalayan polyphenols, and patented liposomal delivery.
+  </p>
+<!-- Interactive Tunnel CTAs & Depth Controller Indicator -->
+<div class="hero-cta flex flex-wrap items-center justify-center gap-4">
+<a class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-secondary-fixed text-on-secondary-fixed font-title-md text-base font-bold hover:bg-secondary-fixed-dim transition-all shadow-[0_10px_30px_rgba(253,195,70,0.35)] hover:shadow-[0_14px_40px_rgba(253,195,70,0.5)] hover:-translate-y-0.5" href="#collection">
+<span>Explore Formulations</span>
+<span class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+<a class="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-inverse-on-surface font-title-md text-base hover:bg-white/20 transition-all hover:-translate-y-0.5" href="#science">
+<span class="material-symbols-outlined text-secondary-fixed text-xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span>Discover Our Science</span>
+</a>
+</div>
+<!-- Interactive Scroll / Drag Hint -->
+<div class="mt-8 flex items-center gap-3 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-xs text-outline-variant font-medium">
+<span class="material-symbols-outlined text-secondary-fixed text-sm animate-bounce">mouse</span>
+<span>Scroll wheel or move pointer to warp through the 3D botanical corridor</span>
+<span class="hidden sm:inline">•</span>
+<button class="text-primary-fixed hover:underline hidden sm:inline" id="resetTunnelBtn">Reset Perspective</button>
+</div>
+</div>
+</section>
+<!-- 2. NOTCHED AUTOPILOT METRICS WITH GSAP SCRUBBING COUNTERS -->
+<section class="w-full bg-surface-container-low py-14 px-margin-mobile lg:px-margin border-y border-outline-variant/30" id="metrics">
+<div class="max-w-7xl mx-auto space-y-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-xs uppercase tracking-widest text-primary font-bold">Cellular Autopilot Metrics</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-semibold text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-primary">verified</span> ISO 17025 Certified</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-secondary">shield</span> Double-Blind Verifications</span>
+</div>
+</div>
+<!-- 4 Notched Ticket Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Ticket 1: 99.4% -->
+<div class="notched-card p-6 rounded-2xl border border-primary/25 shadow-md hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+<div class="flex items-center justify-between text-outline-variant mb-3">
+<span class="text-xs uppercase tracking-wider font-bold text-primary">Biomarker Lift</span>
+<span class="material-symbols-outlined text-primary text-xl group-hover:rotate-12 transition-transform">bolt</span>
+</div>
+<div class="flex items-baseline gap-0.5">
+<span class="counter font-headline-lg text-4xl text-on-surface font-bold tracking-tight" data-decimals="1" data-target="99.4">0.0</span>
+<span class="font-headline-lg text-2xl text-on-surface font-bold">%</span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium mt-1">Active Liposomal Delivery Matrix</p>
+<div class="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-xs">
+<span class="text-outline">Absorption</span>
+<span class="text-primary font-bold flex items-center gap-0.5"><span class="material-symbols-outlined text-xs">trending_up</span> 4.8x Speed</span>
+</div>
+</div>
+<!-- Ticket 2: 100% -->
+<div class="notched-card p-6 rounded-2xl border border-secondary/30 shadow-md hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+<div class="flex items-center justify-between text-outline-variant mb-3">
+<span class="text-xs uppercase tracking-wider font-bold text-secondary">Purity Protocol</span>
+<span class="material-symbols-outlined text-secondary text-xl group-hover:rotate-12 transition-transform">nest_eco_leaf</span>
+</div>
+<div class="flex items-baseline gap-0.5">
+<span class="counter font-headline-lg text-4xl text-on-surface font-bold tracking-tight" data-decimals="0" data-target="100">0</span>
+<span class="font-headline-lg text-2xl text-on-surface font-bold">%</span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium mt-1">Clean Botanical Extraction</p>
+<div class="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-xs">
+<span class="text-outline">Contaminants</span>
+<span class="text-secondary font-bold">Zero Synthetics</span>
+</div>
+</div>
+<!-- Ticket 3: 12,000+ -->
+<div class="notched-card p-6 rounded-2xl border border-primary/25 shadow-md hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+<div class="flex items-center justify-between text-outline-variant mb-3">
+<span class="text-xs uppercase tracking-wider font-bold text-primary">Daily Ritualists</span>
+<span class="material-symbols-outlined text-secondary text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="flex items-baseline gap-0.5">
+<span class="counter font-headline-lg text-4xl text-on-surface font-bold tracking-tight" data-decimals="0" data-target="12000">0</span>
+<span class="font-headline-lg text-2xl text-on-surface font-bold">+</span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium mt-1">Verified 5-Star Patrons</p>
+<div class="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-xs">
+<span class="text-outline">Adherence</span>
+<span class="text-primary font-bold">96.8% Renewal</span>
+</div>
+</div>
+<!-- Ticket 4: Net 0 -->
+<div class="notched-card p-6 rounded-2xl border border-tertiary/30 shadow-md hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+<div class="flex items-center justify-between text-outline-variant mb-3">
+<span class="text-xs uppercase tracking-wider font-bold text-tertiary">Eco Regeneration</span>
+<span class="material-symbols-outlined text-primary text-xl group-hover:rotate-12 transition-transform">compost</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-4xl text-on-surface font-bold tracking-tight">Net 0</span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium mt-1">Carbon-Negative Atelier</p>
+<div class="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-xs">
+<span class="text-outline">Harvest Footprint</span>
+<span class="text-primary font-bold">100% Recyclable</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. PETALYX 3-PANEL INTERACTIVE HOVER ACCORDION ("The Ojas Daily Ritual") -->
+<section class="w-full py-24 bg-surface px-margin-mobile lg:px-margin" id="ritual">
+<div class="max-w-7xl mx-auto space-y-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+<div class="space-y-2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs uppercase tracking-wider font-bold">
+<span class="material-symbols-outlined text-sm">cycle</span>
+                  Interactive Circadian Loop
+                </div>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-on-surface tracking-tight">
+                  The Ojas Daily Ritual: From Intake to Cellular Vitality
+                </h2>
+<p class="text-base text-on-surface-variant max-w-2xl font-light">
+                  Hover across the circadian phases to inspect how our bio-identical gummies synchronize with your biological clock.
+                </p>
+</div>
+<div class="flex items-center gap-2 text-xs text-primary font-bold uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                Interactive 3-Phase Loop
+              </div>
+</div>
+<!-- 3 Horizontal Expandable Panels -->
+<div class="flex flex-col lg:flex-row gap-5 min-h-[520px] w-full" id="accordionContainer">
+<!-- PANEL 1: Morning Glutathione (Active by default) -->
+<div class="panel is-active rounded-3xl p-7 lg:p-8 bg-gradient-to-br from-[#0b1710] to-[#15291b] text-inverse-on-surface cursor-pointer relative overflow-hidden flex flex-col justify-between shadow-xl border border-primary-fixed/20 group" data-panel="1">
+<!-- Watermark Giant Number -->
+<span class="absolute -bottom-8 -right-4 font-headline-lg text-[160px] lg:text-[210px] font-bold text-primary-fixed/10 select-none pointer-events-none leading-none">01</span>
+<!-- Header info -->
+<div class="relative z-10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-9 h-9 rounded-full bg-secondary-fixed/20 border border-secondary-fixed/40 flex items-center justify-center text-secondary-fixed font-bold text-sm">01</span>
+<span class="text-xs uppercase tracking-widest text-secondary-fixed font-bold">Morning Ingestion • 08:00 AM</span>
+</div>
+<span class="panel-badge px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-xs font-bold shadow-sm">Active Phase</span>
+</div>
+<!-- Collapsed Title Label (visible when inactive) -->
+<div class="panel-collapsed-label relative z-10 my-auto py-8">
+<h3 class="font-headline-md text-2xl text-inverse-on-surface font-semibold">Liposomal Glutathione</h3>
+<p class="text-xs text-outline-variant mt-1">Cellular Awakening &amp; Radiant Vigor</p>
+</div>
+<!-- Expanded Body Content -->
+<div class="panel-expanded-body relative z-10 my-auto py-4 max-w-xl">
+<h3 class="font-headline-md text-2xl lg:text-3xl text-inverse-on-surface font-semibold mb-3">Liposomal Glutathione &amp; Cellular Awakening</h3>
+<p class="text-sm lg:text-base text-outline-variant leading-relaxed">
+                    Kickstart your morning cellular defense. Our sugar-free Liposomal Glutathione gummy delivers high-potency antioxidant protection directly to your bloodstream, neutralizing overnight oxidative stress, brightening skin vitality, and energizing mitochondrial ATP synthesis.
+                  </p>
+<!-- Floating Product Mini Card -->
+<div class="mt-6 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<img alt="Liposomal Glutathione Gummies" class="w-14 h-14 object-contain drop-shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxJ3oeukiNLRQ46hFOAHvleFTu_nhDDSNT97YfZ3q_1nc1vijcD-L9RgZt2FsxqS2JV1ivduA38LgC0qcsliebNJoSR-as1LHAMvkwoKIgsA7eTnxA8jdY1YqPW8aovBtm51jYPPdYXJMjaergvh4kNBz6eGb-2wZnYOlqBeIzwiCVZaEWVw3p_BKfTNEBVEUxoy-6em-Lb94tuTRB-KKzwUzeWnRmElDEZm7ihYduOAZNEz4qups9ww"/>
+<div>
+<p class="text-sm font-bold text-inverse-on-surface">Liposomal Glutathione Gummies</p>
+<p class="text-xs text-outline-variant">Sugar Free • Blueberry • ₹799</p>
+</div>
+</div>
+<a class="px-4 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed text-xs font-bold hover:bg-secondary-fixed-dim transition-colors whitespace-nowrap" href="#collection">Take Morning Dose</a>
+</div>
+</div>
+<!-- Footer Bar -->
+<div class="relative z-10 flex items-center justify-between text-xs text-outline-variant pt-3 border-t border-white/10">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-primary-fixed">verified</span> Cellular Detox &amp; Radiant Vigor</span>
+<span class="font-bold text-primary-fixed">Phase 1 / 3</span>
+</div>
+</div>
+<!-- PANEL 2: Midday Eye Care -->
+<div class="panel rounded-3xl p-7 lg:p-8 bg-gradient-to-br from-[#181a11] to-[#252716] text-inverse-on-surface cursor-pointer relative overflow-hidden flex flex-col justify-between shadow-xl border border-secondary-fixed/20 group" data-panel="2">
+<span class="absolute -bottom-8 -right-4 font-headline-lg text-[160px] lg:text-[210px] font-bold text-secondary-fixed/10 select-none pointer-events-none leading-none">02</span>
+<div class="relative z-10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-9 h-9 rounded-full bg-secondary-fixed/20 border border-secondary-fixed/40 flex items-center justify-center text-secondary-fixed font-bold text-sm">02</span>
+<span class="text-xs uppercase tracking-widest text-secondary-fixed font-bold">Midday Focus • 02:00 PM</span>
+</div>
+<span class="panel-badge px-3 py-1 rounded-full bg-white/10 text-inverse-on-surface text-xs font-semibold backdrop-blur-sm">Explore Phase</span>
+</div>
+<div class="panel-collapsed-label relative z-10 my-auto py-8">
+<h3 class="font-headline-md text-2xl text-inverse-on-surface font-semibold">Eye Care Gummies</h3>
+<p class="text-xs text-outline-variant mt-1">Lutein &amp; Blue Light Filtering</p>
+</div>
+<div class="panel-expanded-body relative z-10 my-auto py-4 max-w-xl">
+<h3 class="font-headline-md text-2xl lg:text-3xl text-inverse-on-surface font-semibold mb-3">Eye Care &amp; Blue Light Filtering</h3>
+<p class="text-sm lg:text-base text-outline-variant leading-relaxed">
+                    Neutralize digital screen exhaustion and midday fatigue. Concentrated carotenoids Lutein and Zeaxanthin concentrate in the macular pigment, creating a biological filter against high-energy blue photon wavelengths while protecting photoreceptor integrity.
+                  </p>
+<div class="mt-6 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<img alt="Eye Care Gummies" class="w-14 h-14 object-contain drop-shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAewOT7a5RS11_f5umoA1OAC5xr8veQgrglvk3WQEZ7d-19oWsMyDCsxhTj_78Vp_hsCaA7jNCes3dUUdxpI_BSzLgq6iu5evFOSTD0Xx2IlE7oyG8RZlDiiMZP2bSAi3SHoN9rtIqm5ZXKGLb1yOEDv2GAGuKfsaOzcpQnYrFnYGTvksCgvr9JlGO6N0lZIpazmEKQNNFE2Bub_LqU0bakxE8DcaHUWWD07WBZOWmDLT7YbTsP_fxoPw"/>
+<div>
+<p class="text-sm font-bold text-inverse-on-surface">Eye Care Gummies</p>
+<p class="text-xs text-outline-variant">Lutein + Zeaxanthin • ₹699</p>
+</div>
+</div>
+<a class="px-4 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed text-xs font-bold hover:bg-secondary-fixed-dim transition-colors whitespace-nowrap" href="#collection">Take Midday Dose</a>
+</div>
+</div>
+<div class="relative z-10 flex items-center justify-between text-xs text-outline-variant pt-3 border-t border-white/10">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-secondary-fixed">visibility</span> Macular Shield &amp; Neural Calm</span>
+<span class="font-bold text-secondary-fixed">Phase 2 / 3</span>
+</div>
+</div>
+<!-- PANEL 3: Evening ACV -->
+<div class="panel rounded-3xl p-7 lg:p-8 bg-gradient-to-br from-[#1a1114] to-[#2d181e] text-inverse-on-surface cursor-pointer relative overflow-hidden flex flex-col justify-between shadow-xl border border-error-container/20 group" data-panel="3">
+<span class="absolute -bottom-8 -right-4 font-headline-lg text-[160px] lg:text-[210px] font-bold text-error-container/10 select-none pointer-events-none leading-none">03</span>
+<div class="relative z-10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-9 h-9 rounded-full bg-secondary-fixed/20 border border-secondary-fixed/40 flex items-center justify-center text-secondary-fixed font-bold text-sm">03</span>
+<span class="text-xs uppercase tracking-widest text-secondary-fixed font-bold">Evening Metabolism • 08:30 PM</span>
+</div>
+<span class="panel-badge px-3 py-1 rounded-full bg-white/10 text-inverse-on-surface text-xs font-semibold backdrop-blur-sm">Explore Phase</span>
+</div>
+<div class="panel-collapsed-label relative z-10 my-auto py-8">
+<h3 class="font-headline-md text-2xl text-inverse-on-surface font-semibold">Apple Cider Vinegar</h3>
+<p class="text-xs text-outline-variant mt-1">Metabolic Equilibrium &amp; Digest</p>
+</div>
+<div class="panel-expanded-body relative z-10 my-auto py-4 max-w-xl">
+<h3 class="font-headline-md text-2xl lg:text-3xl text-inverse-on-surface font-semibold mb-3">Apple Cider Vinegar Metabolic Balance</h3>
+<p class="text-sm lg:text-base text-outline-variant leading-relaxed">
+                    Stabilize post-dinner glycemic response and nurture overnight metabolic fasting. Formulated with authentic mother enzymes to soothe digestion, lower fasting triglycerides, and promote restorative regenerative rest without synthetic stimulants.
+                  </p>
+<div class="mt-6 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<img alt="Apple Cider Vinegar Gummies" class="w-14 h-14 object-contain drop-shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVo2pzhpmTG_jMhnyScpc_LUxqd_fCTGu--myGHr_5UyEj_TKCcTlhXRZQrY0z9V-BbfSgId9CIxoAkB_g3q_yITZcvG_4Zh9Imbj__QpU3s2Mlg__feoHAJpYvHtpy2hCpX6i0hJiAJ0ypxzKXYQ3tcZodw2a_-vHYBfGATLfDHEAJOj8KBngqOMDOGAspSaiJrejjMao-YI2Hur-uALaOpY5EjbG1e3rBrQ-L64FnONI_oWkBoD_ig"/>
+<div>
+<p class="text-sm font-bold text-inverse-on-surface">Apple Cider Vinegar Gummies</p>
+<p class="text-xs text-outline-variant">With Mother Ferment • ₹699</p>
+</div>
+</div>
+<a class="px-4 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed text-xs font-bold hover:bg-secondary-fixed-dim transition-colors whitespace-nowrap" href="#collection">Take Evening Dose</a>
+</div>
+</div>
+<div class="relative z-10 flex items-center justify-between text-xs text-outline-variant pt-3 border-t border-white/10">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-error-container">nutrition</span> Digestive Equilibrium &amp; Repair</span>
+<span class="font-bold text-error-container">Phase 3 / 3</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. CORE SHOWCASE WITH AUTHENTIC PACKAGING (Including Sea Buckthorn, Glutathione, Eye Care, ACV) -->
+<section class="w-full py-20 px-margin-mobile lg:px-margin bg-surface-container-low" id="collection">
+<div class="max-w-7xl mx-auto space-y-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 border-b border-outline-variant/30">
+<div class="space-y-2">
+<span class="text-xs uppercase tracking-widest text-primary font-bold">The Core Longevity Collection</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-on-surface tracking-tight">
+                  Targeted Bio-Formulations for Sustained Prime
+                </h2>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-4 py-2 rounded-full bg-surface-container-lowest text-primary text-xs uppercase tracking-wider font-bold shadow-sm border border-outline-variant/30">
+                  4 Official Formulations Available
+                </span>
+</div>
+</div>
+<!-- 4-Card Asymmetrical Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product 1: Sea Buckthorn Gummies -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col justify-between group hover:shadow-xl transition-all duration-300 border border-outline-variant/30">
+<div>
+<div class="flex items-center justify-between gap-2 mb-3">
+<span class="px-3 py-0.5 rounded-full bg-secondary-fixed/40 text-on-secondary-fixed-variant text-[11px] font-bold uppercase tracking-wider">
+      OMEGA 7 &amp; GLOW
+    </span>
+<span class="font-title-lg text-lg text-on-surface font-semibold">₹799.00</span>
+</div>
+<div class="w-full aspect-[4/3] bg-surface-container-low rounded-2xl flex items-center justify-center p-3 mb-4 group-hover:bg-surface-container transition-colors">
+<img alt="OjasNutra Sea Buckthorn Gummies" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKdOMN7grVTjCzcy0vSMT1PvSOPQueIQf4eJWkKvhKmfOqp73h0nACsyEstN7pr2AQDRW3Uai5Ui4qRVPaZrXLCv5N8ieITDguyTSNfdYo-KpXsWeFNi9PbGKJE2rjtr2jVH4pngQYnr7nG4mEeBE5mrICzhdeFKwnGG0S8CN6hHBm850nfBlrDCpE3dzXdeX_z3tYzqXxSB5IYPO1NM0KTEJ1nvcND6OqIs4U_Fz9Ho_DT-0CgZvjHQ"/>
+</div>
+<h3 class="font-headline-sm text-xl text-on-surface font-semibold">Sea Buckthorn Gummies</h3>
+<p class="text-xs text-on-surface-variant mt-1 leading-relaxed">
+    Supports immunity, glowing skin, collagen synthesis, and systemic mucous-membrane vitality.
+  </p>
+<div class="mt-3 flex flex-wrap gap-1.5 text-[11px]">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Sugar Free</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Natural Fruit Extract</span>
+</div>
+</div>
+<div class="pt-5">
+<button class="w-full py-3 px-5 rounded-full bg-inverse-surface text-inverse-on-surface text-sm font-semibold hover:bg-primary-container transition-colors flex items-center justify-center gap-2" onclick="alert('Added Sea Buckthorn Gummies (₹799) to your ritual cart!');">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+<span>Add to Ritual • ₹799</span>
+</button>
+</div>
+</div>
+<!-- Product 2: Liposomal Glutathione Gummies -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col justify-between group hover:shadow-xl transition-all duration-300 border border-outline-variant/30">
+<div>
+<div class="flex items-center justify-between gap-2 mb-3">
+<span class="px-3 py-0.5 rounded-full bg-primary-fixed/40 text-on-primary-fixed-variant text-[11px] font-bold uppercase tracking-wider">
+      MASTER ANTIOXIDANT
+    </span>
+<span class="font-title-lg text-lg text-on-surface font-semibold">₹799.00</span>
+</div>
+<div class="w-full aspect-[4/3] bg-surface-container-low rounded-2xl flex items-center justify-center p-3 mb-4 group-hover:bg-surface-container transition-colors">
+<img alt="OjasNutra Liposomal Glutathione Gummies" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxJ3oeukiNLRQ46hFOAHvleFTu_nhDDSNT97YfZ3q_1nc1vijcD-L9RgZt2FsxqS2JV1ivduA38LgC0qcsliebNJoSR-as1LHAMvkwoKIgsA7eTnxA8jdY1YqPW8aovBtm51jYPPdYXJMjaergvh4kNBz6eGb-2wZnYOlqBeIzwiCVZaEWVw3p_BKfTNEBVEUxoy-6em-Lb94tuTRB-KKzwUzeWnRmElDEZm7ihYduOAZNEz4qups9ww"/>
+</div>
+<h3 class="font-headline-sm text-xl text-on-surface font-semibold">Liposomal Glutathione</h3>
+<p class="text-xs text-on-surface-variant mt-1 leading-relaxed">
+    Brighter skin, heavy antioxidant defense, immune vigor, and mitochondrial cellular detoxification.
+  </p>
+<div class="mt-3 flex flex-wrap gap-1.5 text-[11px]">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Blueberry</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Gluten Free</span>
+</div>
+</div>
+<div class="pt-5">
+<button class="w-full py-3 px-5 rounded-full bg-inverse-surface text-inverse-on-surface text-sm font-semibold hover:bg-primary-container transition-colors flex items-center justify-center gap-2" onclick="alert('Added Liposomal Glutathione Gummies (₹799) to your ritual cart!');">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+<span>Add to Ritual • ₹799</span>
+</button>
+</div>
+</div>
+<!-- Product 3: Eye Care Gummies -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col justify-between group hover:shadow-xl transition-all duration-300 border border-outline-variant/30">
+<div>
+<div class="flex items-center justify-between gap-2 mb-3">
+<span class="px-3 py-0.5 rounded-full bg-secondary-fixed/40 text-on-secondary-fixed-variant text-[11px] font-bold uppercase tracking-wider">
+      VISION &amp; REPAIR
+    </span>
+<span class="font-title-lg text-lg text-on-surface font-semibold">₹699.00</span>
+</div>
+<div class="w-full aspect-[4/3] bg-surface-container-low rounded-2xl flex items-center justify-center p-3 mb-4 group-hover:bg-surface-container transition-colors">
+<img alt="OjasNutra Eye Care Gummies" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAewOT7a5RS11_f5umoA1OAC5xr8veQgrglvk3WQEZ7d-19oWsMyDCsxhTj_78Vp_hsCaA7jNCes3dUUdxpI_BSzLgq6iu5evFOSTD0Xx2IlE7oyG8RZlDiiMZP2bSAi3SHoN9rtIqm5ZXKGLb1yOEDv2GAGuKfsaOzcpQnYrFnYGTvksCgvr9JlGO6N0lZIpazmEKQNNFE2Bub_LqU0bakxE8DcaHUWWD07WBZOWmDLT7YbTsP_fxoPw"/>
+</div>
+<h3 class="font-headline-sm text-xl text-on-surface font-semibold">Eye Care Gummies</h3>
+<p class="text-xs text-on-surface-variant mt-1 leading-relaxed">
+    Enriched with Lutein &amp; Zeaxanthin to shield macula against digital blue light and fatigue.
+  </p>
+<div class="mt-3 flex flex-wrap gap-1.5 text-[11px]">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Orange Flavour</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Non-GMO</span>
+</div>
+</div>
+<div class="pt-5">
+<button class="w-full py-3 px-5 rounded-full bg-inverse-surface text-inverse-on-surface text-sm font-semibold hover:bg-primary-container transition-colors flex items-center justify-center gap-2" onclick="alert('Added Eye Care Gummies (₹699) to your ritual cart!');">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+<span>Add to Ritual • ₹699</span>
+</button>
+</div>
+</div>
+<!-- Product 4: Apple Cider Vinegar Gummies -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col justify-between group hover:shadow-xl transition-all duration-300 border border-outline-variant/30">
+<div>
+<div class="flex items-center justify-between gap-2 mb-3">
+<span class="px-3 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant text-[11px] font-bold uppercase tracking-wider">
+      METABOLIC RESET
+    </span>
+<span class="font-title-lg text-lg text-on-surface font-semibold">₹699.00</span>
+</div>
+<div class="w-full aspect-[4/3] bg-surface-container-low rounded-2xl flex items-center justify-center p-3 mb-4 group-hover:bg-surface-container transition-colors">
+<img alt="OjasNutra Apple Cider Vinegar Gummies" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVo2pzhpmTG_jMhnyScpc_LUxqd_fCTGu--myGHr_5UyEj_TKCcTlhXRZQrY0z9V-BbfSgId9CIxoAkB_g3q_yITZcvG_4Zh9Imbj__QpU3s2Mlg__feoHAJpYvHtpy2hCpX6i0hJiAJ0ypxzKXYQ3tcZodw2a_-vHYBfGATLfDHEAJOj8KBngqOMDOGAspSaiJrejjMao-YI2Hur-uALaOpY5EjbG1e3rBrQ-L64FnONI_oWkBoD_ig"/>
+</div>
+<h3 class="font-headline-sm text-xl text-on-surface font-semibold">Apple Cider Vinegar</h3>
+<p class="text-xs text-on-surface-variant mt-1 leading-relaxed">
+    Authentic mother ferment enzymes to support glycemic stability and gentle digestive calm.
+  </p>
+<div class="mt-3 flex flex-wrap gap-1.5 text-[11px]">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Mother Active</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Pectin Based</span>
+</div>
+</div>
+<div class="pt-5">
+<button class="w-full py-3 px-5 rounded-full bg-inverse-surface text-inverse-on-surface text-sm font-semibold hover:bg-primary-container transition-colors flex items-center justify-center gap-2" onclick="alert('Added Apple Cider Vinegar Gummies (₹699) to your ritual cart!');">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+<span>Add to Ritual • ₹699</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. EXTRACTION CHRONICLE (4-STEP HORIZONTAL CARD PROGRESSION) -->
+<section class="w-full py-24 bg-surface px-margin-mobile lg:px-margin">
+<div class="max-w-7xl mx-auto space-y-16">
+<div class="text-center max-w-2xl mx-auto space-y-3">
+<span class="text-xs uppercase tracking-widest text-primary font-bold">The Extraction Chronicle</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-on-surface tracking-tight">
+                From Mountain Canopy to Cellular Absorption
+              </h2>
+<p class="text-base text-on-surface-variant leading-relaxed font-light">
+                Standard botanicals degrade by up to 78% during high-heat processing. Here is how our certified cold-chain alchemy preserves alive biophotons.
+              </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-surface-container-low rounded-2xl p-6 shadow-sm flex flex-col justify-between space-y-6 hover:-translate-y-1 transition-transform border border-outline-variant/30">
+<div class="space-y-4">
+<span class="font-headline-md text-2xl text-secondary font-bold">01</span>
+<h3 class="text-lg font-bold text-on-surface">High-Altitude Foraging</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                    Harvested at peak solar solstice above 11,000 feet in pristine Himalayan micro-climates where plants synthesize protective polyphenols.
+                  </p>
+</div>
+<div class="pt-4 flex items-center gap-2 text-primary text-xs uppercase font-bold tracking-wider">
+<span class="material-symbols-outlined text-base">terrain</span>
+<span>Wild Harvested</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 shadow-sm flex flex-col justify-between space-y-6 hover:-translate-y-1 transition-transform border border-outline-variant/30">
+<div class="space-y-4">
+<span class="font-headline-md text-2xl text-secondary font-bold">02</span>
+<h3 class="text-lg font-bold text-on-surface">Supercritical CO₂ Extraction</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                    Never boiled or exposed to neurotoxic hexanes or ethanol. Pressurized clean CO₂ leaves 100% active compounds pure and solvent-free.
+                  </p>
+</div>
+<div class="pt-4 flex items-center gap-2 text-primary text-xs uppercase font-bold tracking-wider">
+<span class="material-symbols-outlined text-base">ac_unit</span>
+<span>Zero Solvents</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 shadow-sm flex flex-col justify-between space-y-6 hover:-translate-y-1 transition-transform border border-outline-variant/30">
+<div class="space-y-4">
+<span class="font-headline-md text-2xl text-secondary font-bold">03</span>
+<h3 class="text-lg font-bold text-on-surface">Liposomal Nano-Spheres</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                    Active botanicals are wrapped in protective sunflower phosphatidylcholine spheres, surviving stomach acid to deliver actives intact to cell walls.
+                  </p>
+</div>
+<div class="pt-4 flex items-center gap-2 text-primary text-xs uppercase font-bold tracking-wider">
+<span class="material-symbols-outlined text-base">bubble_chart</span>
+<span>4.8x Bioavailability</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 shadow-sm flex flex-col justify-between space-y-6 hover:-translate-y-1 transition-transform border border-outline-variant/30">
+<div class="space-y-4">
+<span class="font-headline-md text-2xl text-secondary font-bold">04</span>
+<h3 class="text-lg font-bold text-on-surface">Triple Blind Verification</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                    Every production lot is cross-tested by independent accredited laboratories for heavy metals, microbials, pesticides, and exact active percentages.
+                  </p>
+</div>
+<div class="pt-4 flex items-center gap-2 text-primary text-xs uppercase font-bold tracking-wider">
+<span class="material-symbols-outlined text-base">fact_check</span>
+<span>Open Public COA</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. CLINICAL RIGOR & INTERACTIVE BATCH VERIFIER -->
+<section class="w-full py-24 bg-surface-container-lowest px-margin-mobile lg:px-margin border-t border-outline-variant/30" id="science">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+<!-- Left: Botanical Laboratory Image -->
+<div class="lg:col-span-6 relative">
+<div class="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3] bg-surface-container">
+<img alt="OjasNutra Clinical Herbal Research Atelier" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WPbAWRHbNuXpg2ATigGa31I_bK9pPU3RUdZWdpG_dkkHFDNwRrgVnI4nn6lzX3NjXDJt6uykrgsKKvtATPOH-NLW1JHkrGda94Q938ipSH3-cRv2F9Wpc5J9fDkqAzyuMM41i3Fs_D8sTl_YbawImPRzbX-dP4UUQneiGtQTyyu8w_DF6K3iqIgUHBu_nQIUgrUeFIe1OZ1fE46_vev0Hrr8q-nnNGZ_so2JDkFuBZkMR7fognOXLDtdRF"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/65 via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6 text-on-primary">
+<span class="text-xs uppercase tracking-widest text-secondary-fixed font-bold block mb-1">
+                      Atelier Research Facility • Zürich &amp; Dehradun
+                    </span>
+<p class="text-base font-medium">Where ancient Ayurvedic palm manuscripts meet high-resolution liquid chromatography.</p>
+</div>
+</div>
+<div class="absolute -bottom-6 -right-6 hidden sm:flex items-center gap-3 p-4 rounded-2xl bg-surface-container-lowest shadow-2xl border border-outline-variant/30 text-on-surface">
+<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+<div>
+<span class="text-xs uppercase tracking-wider text-outline block">Protocol Standard</span>
+<span class="text-base font-bold text-on-surface">ISO 17025 Certified</span>
+</div>
+</div>
+</div>
+<!-- Right: Scientific Rigor & COA Lookup -->
+<div class="lg:col-span-6 space-y-8">
+<div class="space-y-3">
+<span class="text-xs uppercase tracking-widest text-primary font-bold">Uncompromising Science</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-on-surface tracking-tight">
+                    A New Standard in Transparent Nutraceutical Truth
+                  </h2>
+<p class="text-base text-on-surface-variant font-light leading-relaxed">
+                    We reject proprietary blends that conceal under-dosed actives. Every formulation discloses exact active mg potencies with publicly auditable batch certificates.
+                  </p>
+</div>
+<div class="space-y-3">
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">menu_book</span>
+<div>
+<h4 class="text-sm font-semibold text-on-surface">Clinically Calibrated Dosages</h4>
+<p class="text-xs text-on-surface-variant">We match the exact milligram thresholds verified in double-blind placebo trials.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">biotech</span>
+<div>
+<h4 class="text-sm font-semibold text-on-surface">Independent 5-Tier Contaminant Profiling</h4>
+<p class="text-xs text-on-surface-variant">Zero arsenic, lead, microplastics, or glyphosates. Tested down to parts-per-billion.</p>
+</div>
+</div>
+</div>
+<!-- Interactive COA Batch Search -->
+<div class="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/40 space-y-4">
+<div class="flex items-center justify-between">
+<label class="text-sm font-bold text-on-surface" for="batchCodeInput">Inspect Your Batch Certificate (COA)</label>
+<span class="text-[10px] text-primary uppercase font-bold tracking-wider">Live Database</span>
+</div>
+<div class="flex items-center gap-2">
+<input class="flex-1 bg-surface-container-lowest px-4 py-3 rounded-full text-sm font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary shadow-sm border border-outline-variant/30" id="batchCodeInput" placeholder="e.g. #OJ-2025-08" type="text" value="#OJ-2025-08"/>
+<button class="px-6 py-3 rounded-full bg-primary text-on-primary text-sm font-semibold hover:bg-primary-container transition-colors shadow-sm flex items-center gap-1.5 whitespace-nowrap" onclick="alert('Batch #OJ-2025-08 Verified: Eurofins ISO-17025 Passed. Heavy Metals: Undetectable (&lt;0.001ppm). Active Potency: 99.4%');">
+<span class="material-symbols-outlined text-lg">search</span>
+<span>Verify</span>
+</button>
+</div>
+<p class="text-xs text-outline">
+                    *Enter the 8-digit stamp found at the packaging carton of any OjasNutra gummy formulation.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. CLINICAL PATRON TESTIMONIALS -->
+<section class="w-full py-24 bg-surface px-margin-mobile lg:px-margin">
+<div class="max-w-7xl mx-auto space-y-12">
+<div class="text-center max-w-2xl mx-auto space-y-2">
+<span class="text-xs uppercase tracking-widest text-primary font-bold">Clinical &amp; Patron Endorsements</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-on-surface tracking-tight">
+                Validated by Researchers &amp; Integrative Physicians
+              </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="p-8 rounded-3xl bg-surface-container-lowest shadow-sm flex flex-col justify-between space-y-6 hover:shadow-md transition-shadow border border-outline-variant/30">
+<div class="space-y-4">
+<div class="flex text-secondary gap-0.5">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-sm text-on-surface italic leading-relaxed">
+                    “OjasNutra Liposomal Glutathione gummies solve patient compliance without gastric upset. The bioavailability profile is genuinely impressive for an over-the-counter formulation.”
+                  </p>
+</div>
+<div class="flex items-center gap-3 pt-2">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">EV</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Dr. Elena Vance, MD</p>
+<p class="text-xs text-outline">Integrative Longevity Institute</p>
+</div>
+</div>
+</div>
+<div class="p-8 rounded-3xl bg-surface-container-lowest shadow-sm flex flex-col justify-between space-y-6 hover:shadow-md transition-shadow border border-outline-variant/30">
+<div class="space-y-4">
+<div class="flex text-secondary gap-0.5">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-sm text-on-surface italic leading-relaxed">
+                    “The Eye Care gummies with Lutein &amp; Zeaxanthin completely resolved my evening dry eyes after 12-hour coding sprints. Plus zero sugar spikes is huge for my fasting tracking.”
+                  </p>
+</div>
+<div class="flex items-center gap-3 pt-2">
+<div class="w-10 h-10 rounded-full bg-secondary/15 flex items-center justify-center text-secondary font-bold">JT</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Julian Thorne</p>
+<p class="text-xs text-outline">Biotech Founder &amp; Longevity Athlete</p>
+</div>
+</div>
+</div>
+<div class="p-8 rounded-3xl bg-surface-container-lowest shadow-sm flex flex-col justify-between space-y-6 hover:shadow-md transition-shadow border border-outline-variant/30">
+<div class="space-y-4">
+<div class="flex text-secondary gap-0.5">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-sm text-on-surface italic leading-relaxed">
+                    “The ACV gummies are delicious and genuinely ease evening bloating. They contain actual mother ferment without eroding tooth enamel like raw liquid vinegar does.”
+                  </p>
+</div>
+<div class="flex items-center gap-3 pt-2">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary font-bold">SL</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Sophia Lin, CNS</p>
+<p class="text-xs text-outline">Functional Nutrition Specialist</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. BOTANICAL CTA WITH FALLING PETAL PARTICLES & FROSTED GLASS -->
+<section class="w-full pb-20 px-margin-mobile lg:px-margin bg-surface" id="circle">
+<div class="max-w-7xl mx-auto">
+<div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#08120c] via-[#102316] to-[#08120c] p-8 md:p-14 text-inverse-on-surface shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8 border border-white/10" id="ctaBanner">
+<div class="sq-field"></div>
+<!-- Dynamic Falling Petal Particles Container -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none z-0" id="petalContainer"></div>
+<!-- Content Left -->
+<div class="space-y-3 max-w-2xl relative z-10">
+<div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-secondary-fixed/20 border border-secondary-fixed/30 text-secondary-fixed text-xs font-semibold tracking-wider uppercase backdrop-blur-md">
+<span class="material-symbols-outlined text-sm">workspace_premium</span>
+<span>Private Atelier Membership</span>
+</div>
+<h2 class="font-headline-lg text-3xl sm:text-4xl text-inverse-on-surface tracking-tight">
+                  The Ojas Circle: Perpetual Vitality Reserved
+                </h2>
+<p class="text-sm sm:text-base text-outline-variant leading-relaxed">
+                  Automatic recurring replenishment shipped direct from fresh micro-batches, priority concierge botanical consultation, and guaranteed harvest reserves. 15% ongoing member privilege.
+                </p>
+<div class="flex items-center gap-4 pt-2 text-xs text-outline-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-secondary-fixed">check_circle</span> Cancel anytime</span>
+<span>•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-secondary-fixed">check_circle</span> Fresh monthly batches</span>
+</div>
+</div>
+<!-- Actions Right -->
+<div class="relative z-10 flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+<button class="px-8 py-4 rounded-full bg-secondary-fixed text-on-secondary-fixed font-title-md text-sm font-bold hover:bg-secondary-fixed-dim transition-all shadow-[0_4px_20px_rgba(253,195,70,0.35)] hover:shadow-[0_6px_28px_rgba(253,195,70,0.5)] whitespace-nowrap text-center" onclick="alert('Welcome to The Ojas Circle! Concierge onboarding initiated.');">
+                  Join The Circle
+                </button>
+<button class="px-7 py-4 rounded-full bg-white/10 border border-white/15 text-inverse-on-surface text-sm font-semibold hover:bg-white/20 transition-all whitespace-nowrap text-center backdrop-blur-md" onclick="alert('How It Works: Select your daily gummy trio, enjoy fresh deliveries every 30 days, pause or swap anytime.');">
+                  How It Works
+                </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- 9. FOOTER WITH ANIMATED SVG LOGO MARK SEQUENCE -->
+<footer class="w-full bg-inverse-surface text-inverse-on-surface pt-space-xl pb-margin border-t border-outline-variant/20 relative z-20" id="footer">
+<div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mb-space-xl items-start">
+<div class="lg:col-span-4 flex flex-col justify-between pr-0 lg:pr-space-lg space-y-6">
+<div class="space-y-4">
+<!-- Animated SVG Brand Mark -->
+<div class="flex items-center gap-4">
+<div class="relative flex items-center justify-center w-12 h-12">
+<svg class="w-12 h-12" id="footerMark" viewbox="0 0 60 60">
+<circle cx="30" cy="30" fill="none" id="footerRing" opacity="0.8" r="26" stroke="#ffdea3" stroke-dasharray="165" stroke-dashoffset="165" stroke-width="1.8"></circle>
+<circle cx="20" cy="15" fill="#a3f6aa" id="dot1" opacity="0" r="2.5"></circle>
+<circle cx="40" cy="15" fill="#f6be40" id="dot2" opacity="0" r="2.5"></circle>
+<circle cx="30" cy="45" fill="#a3f6aa" id="dot3" opacity="0" r="2.5"></circle>
+<path d="M30 38 C23 32, 21 21, 29 17 C29 25, 33 32, 30 38 Z" fill="none" id="leafL" stroke="#a3f6aa" stroke-dasharray="60" stroke-dashoffset="60" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M30 38 C37 32, 39 21, 31 17 C31 25, 27 32, 30 38 Z" fill="none" id="leafR" stroke="#f6be40" stroke-dasharray="60" stroke-dashoffset="60" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="flex items-center gap-2">
+<img alt="OjasNutra" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Sxcvt2ILsbSagpuwSdGXTauMYzf-XhKqLiQo33mCpvYsZhtp3t9j9lw1sp2CpDwSvxqjCyXlHHEWw2XGHCDIudf7UFuXk6HnORPnj63Y8lwsOf5nkrrmeVhxq5dFP8ntcjodQXyZn80-TMCSsEHar5i15FWqLJFPuAhSGKuIJreNlHcZaRAUGGoWBUI7zpTEN8r0KBc7gHx5HaOO4FOF-NfW8hSWMbrmptSWn2vO3gaZ6HgxKOBRVg"/>
+<span class="font-headline-sm text-xl text-on-primary font-semibold">OjasNutra</span>
+</div>
+</div>
+<p class="text-xs text-outline-variant max-w-sm leading-relaxed">
+                High-potency clinical nutraceuticals grounded in Ayurvedic botanical alchemy. Formulated to elevate primordial vigor, cellular resilience, and radiant longevity.
+              </p>
+</div>
+<div class="space-y-2">
+<span class="text-xs uppercase tracking-widest text-secondary-fixed-dim font-bold">The Longevity Circle</span>
+<form class="flex items-center gap-2" onsubmit="event.preventDefault(); alert('Subscribed to Ojas Longevity Circle updates.');">
+<input class="flex-1 bg-white/10 border border-white/15 rounded-full px-4 py-2.5 text-xs text-inverse-on-surface placeholder-outline focus:outline-none focus:ring-1 focus:ring-secondary-fixed-dim" placeholder="Enter your email" type="email"/>
+<button class="rounded-full bg-primary-container px-4 py-2.5 text-xs font-bold text-on-primary hover:bg-primary transition-colors flex items-center gap-1 shadow-md" type="submit">Join</button>
+</form>
+</div>
+</div>
+<div class="lg:col-span-2 space-y-3">
+<h4 class="text-xs uppercase tracking-wider text-secondary-fixed-dim font-bold">Formulas &amp; Shop</h4>
+<ul class="space-y-2 text-xs text-outline-variant">
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="shop" href="#collection">Sea Buckthorn Gummies</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="shop" href="#collection">Glutathione Gummies</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="shop" href="#collection">Eye Care Gummies</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="shop" href="#collection">Apple Cider Vinegar</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="shop" href="#ritual">Circadian Loop</a></li>
+</ul>
+</div>
+<div class="lg:col-span-3 space-y-3">
+<h4 class="text-xs uppercase tracking-wider text-secondary-fixed-dim font-bold">Science &amp; Transparency</h4>
+<ul class="space-y-2 text-xs text-outline-variant">
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="our-science" href="#science">Clinical Research</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="our-science" href="#science">Third-Party COA Archive</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="our-science" href="#science">Sourcing &amp; Potency Standards</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="our-science" href="#science">Liposomal Delivery</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="our-science" href="#science">Practitioner Portal</a></li>
+</ul>
+</div>
+<div class="lg:col-span-3 space-y-3">
+<h4 class="text-xs uppercase tracking-wider text-secondary-fixed-dim font-bold">Company &amp; Care</h4>
+<ul class="space-y-2 text-xs text-outline-variant">
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="about-us" href="#">Our Philosophy</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="about-us" href="#">Atelier &amp; Laboratories</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="about-us" href="#">Regenerative Sustainability</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="contact-concierge" href="#">Frequently Asked Questions</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="contact-concierge" href="#">Shipping &amp; Global Returns</a></li>
+<li><a class="hover:text-inverse-on-surface transition-colors" data-path="contact-concierge" href="#">Contact Concierge</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-6 space-y-4 border-t border-white/10">
+<p class="text-[11px] text-outline/80 leading-relaxed">
+            *These statements have not been evaluated by the Food and Drug Administration. These products are nutraceutical food supplements and are not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary. Consult your physician prior to starting any concentrated botanical regimen.
+          </p>
+<div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-outline-variant pt-2">
+<div>© 2025 OjasNutra Atelier Inc. All rights reserved. Clean Science. Radiant Life.</div>
+<div class="flex items-center gap-6">
+<a class="hover:text-inverse-on-surface transition-colors" data-path="privacy-policy" href="#">Privacy Policy</a>
+<a class="hover:text-inverse-on-surface transition-colors" data-path="terms-of-service" href="#">Terms &amp; Conditions</a>
+<a class="hover:text-inverse-on-surface transition-colors" data-path="our-science" href="#science">Quality Verifications</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div> <!-- End #app -->
+<!-- EXTERNAL SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. LENIS SMOOTH SCROLL INITIALIZATION
+      const lenis = new Lenis({
+        duration: 1.25,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+        smoothTouch: false
+      });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId !== '#') {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              lenis.scrollTo(targetEl, { offset: -70 });
+            }
+          }
+        });
+      });
+
+      // 2. 3D PERSPECTIVE TUNNEL MATH & INTERACTION ENGINE
+      const tunnelHero = document.getElementById("tunnelHero");
+      const tunnelStage = document.getElementById("tunnelStage");
+      const tunnelCards = document.querySelectorAll(".tunnel-card");
+      const resetBtn = document.getElementById("resetTunnelBtn");
+
+      let currentZOffset = 0;
+      let targetZOffset = 0;
+      let mouseX = 0;
+      let mouseY = 0;
+      let smoothMouseX = 0;
+      let smoothMouseY = 0;
+      const corridorDepth = 2800; // total tunnel corridor length
+
+      function updateTunnel() {
+        // Interpolate mouse & scroll depth
+        smoothMouseX += (mouseX - smoothMouseX) * 0.08;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.08;
+        currentZOffset += (targetZOffset - currentZOffset) * 0.09;
+
+        // Apply slight tilt and pan to tunnel stage
+        const rotX = -smoothMouseY * 18;
+        const rotY = smoothMouseX * 18;
+        const panX = smoothMouseX * 45;
+        const panY = smoothMouseY * 35;
+
+        tunnelStage.style.transform = `translate3d(${panX}px, ${panY}px, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+
+        // Render each card in perspective corridor
+        tunnelCards.forEach((card) => {
+          const initialDepth = parseFloat(card.getAttribute("data-depth")) || 0;
+          const baseX = parseFloat(card.getAttribute("data-x")) || 0;
+          const baseY = parseFloat(card.getAttribute("data-y")) || 0;
+
+          // Modulo wrap to make corridor endless or looping
+          let rawZ = initialDepth + currentZOffset;
+          // Loop between -corridorDepth and +400
+          while (rawZ > 300) rawZ -= corridorDepth;
+          while (rawZ < -corridorDepth) rawZ += corridorDepth;
+
+          // Calculate visual opacity & blur fade with distance
+          const distFromCam = rawZ; // negative is further away
+          let opacity = 1;
+          let blur = 0;
+
+          if (distFromCam > 150) {
+            // Passing behind camera
+            opacity = Math.max(0, 1 - (distFromCam - 150) / 150);
+          } else if (distFromCam < -1600) {
+            // Far back in the ether
+            opacity = Math.max(0, 1 - (Math.abs(distFromCam) - 1600) / 900);
+            blur = Math.min(8, (Math.abs(distFromCam) - 1600) / 100);
+          }
+
+          card.style.transform = `translate3d(${baseX}px, ${baseY}px, ${distFromCam}px)`;
+          card.style.opacity = opacity.toFixed(3);
+          card.style.filter = blur > 0 ? `blur(${blur.toFixed(1)}px)` : 'none';
+          card.style.pointerEvents = (opacity > 0.4 && distFromCam < 120) ? 'auto' : 'none';
+        });
+
+        requestAnimationFrame(updateTunnel);
+      }
+      requestAnimationFrame(updateTunnel);
+
+      // Track mouse position over hero
+      if (tunnelHero) {
+        tunnelHero.addEventListener("mousemove", (e) => {
+          const rect = tunnelHero.getBoundingClientRect();
+          const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          const normY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+          mouseX = normX;
+          mouseY = normY;
+        });
+
+        tunnelHero.addEventListener("mouseleave", () => {
+          mouseX = 0;
+          mouseY = 0;
+        });
+
+        // Wheel event zooming/warping through perspective tunnel
+        tunnelHero.addEventListener("wheel", (e) => {
+          // If within the hero, allow scroll warping
+          if (Math.abs(e.deltaY) > 5) {
+            targetZOffset -= e.deltaY * 1.5;
+          }
+        }, { passive: true });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+          targetZOffset = 0;
+          mouseX = 0;
+          mouseY = 0;
+        });
+      }
+
+      // Parallax scroll progression linking tunnel forward
+      gsap.to({ val: 0 }, {
+        val: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#tunnelHero",
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+          onUpdate: (self) => {
+            targetZOffset = self.progress * 600;
+          }
+        }
+      });
+
+      // 3. NOTCHED METRICS & GSAP SCRUBBING COUNTERS
+      const counters = document.querySelectorAll(".counter");
+      counters.forEach(counter => {
+        const targetVal = parseFloat(counter.getAttribute("data-target")) || 0;
+        const decimals = parseInt(counter.getAttribute("data-decimals")) || 0;
+        const obj = { val: 0 };
+
+        gsap.to(obj, {
+          val: targetVal,
+          duration: 2.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: counter,
+            start: "top 88%",
+            toggleActions: "play none none none"
+          },
+          onUpdate: () => {
+            if (decimals > 0) {
+              counter.textContent = obj.val.toFixed(decimals);
+            } else {
+              counter.textContent = Math.floor(obj.val).toLocaleString();
+            }
+          }
+        });
+      });
+
+      // 4. 3-PANEL HOVER ACCORDION ("The Ojas Daily Ritual")
+      const panels = document.querySelectorAll(".panel");
+      panels.forEach(panel => {
+        const activate = () => {
+          panels.forEach(p => {
+            p.classList.remove("is-active");
+            const badge = p.querySelector(".panel-badge");
+            if (badge) {
+              badge.textContent = "Explore Phase";
+              badge.classList.remove("bg-secondary-fixed", "text-on-secondary-fixed");
+              badge.classList.add("bg-white/10", "text-inverse-on-surface");
+            }
+          });
+          panel.classList.add("is-active");
+          const activeBadge = panel.querySelector(".panel-badge");
+          if (activeBadge) {
+            activeBadge.textContent = "Active Phase";
+            activeBadge.classList.add("bg-secondary-fixed", "text-on-secondary-fixed");
+            activeBadge.classList.remove("bg-white/10", "text-inverse-on-surface");
+          }
+        };
+
+        panel.addEventListener("mouseenter", activate);
+        panel.addEventListener("click", activate);
+      });
+
+      // 5. BOTANICAL CTA WITH FALLING PETAL PARTICLES
+      const petalContainer = document.getElementById("petalContainer");
+      if (petalContainer) {
+        const petalCount = 18;
+        for (let i = 0; i < petalCount; i++) {
+          const petal = document.createElement("span");
+          petal.className = "petal";
+          const size = Math.random() * 12 + 8;
+          const left = Math.random() * 100;
+          const dur = Math.random() * 4 + 4.5;
+          const delay = Math.random() * 5;
+          const tx = (Math.random() - 0.5) * 90;
+          const rot = Math.random() * 400 + 180;
+
+          petal.style.width = `${size}px`;
+          petal.style.height = `${size * 0.75}px`;
+          petal.style.left = `${left}%`;
+          petal.style.setProperty("--dur", `${dur}s`);
+          petal.style.setProperty("--tx", `${tx}px`);
+          petal.style.setProperty("--rot", `${rot}deg`);
+          petal.style.animationDelay = `${delay}s`;
+
+          petalContainer.appendChild(petal);
+        }
+      }
+
+      // 6. ANIMATED FOOTER LOGO SEQUENCE
+      const footerRing = document.getElementById("footerRing");
+      const leafL = document.getElementById("leafL");
+      const leafR = document.getElementById("leafR");
+      const dots = [document.getElementById("dot1"), document.getElementById("dot2"), document.getElementById("dot3")];
+
+      if (footerRing && leafL && leafR) {
+        const footerTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#footer",
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+
+        footerTl
+          .to(dots, {
+            opacity: 1,
+            stagger: 0.1,
+            duration: 0.3,
+            ease: "power2.out"
+          })
+          .to(dots, {
+            y: 12,
+            stagger: 0.1,
+            yoyo: true,
+            repeat: 1,
+            duration: 0.35,
+            ease: "power1.inOut"
+          })
+          .to(footerRing, {
+            strokeDashoffset: 0,
+            duration: 1.2,
+            ease: "power2.out"
+          }, "-=0.2")
+          .to([leafL, leafR], {
+            strokeDashoffset: 0,
+            stagger: 0.15,
+            duration: 0.9,
+            ease: "power2.out"
+          }, "-=0.8")
+          .to(dots, {
+            opacity: 0,
+            duration: 0.3
+          }, "-=0.5");
+      }
+    });
+  </script>
+</body></html>

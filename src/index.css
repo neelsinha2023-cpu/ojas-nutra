@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #005420;
+  --color-primary-container: #1b6e32;
+  --color-primary-fixed: #a3f6aa;
+  --color-primary-fixed-dim: #87d990;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #9beea3;
+  --color-on-primary-fixed: #002108;
+  --color-on-primary-fixed-variant: #00531f;
+
+  --color-secondary: #7a5900;
+  --color-secondary-container: #fdc346;
+  --color-secondary-fixed: #ffdea3;
+  --color-secondary-fixed-dim: #f6be40;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #705100;
+  --color-on-secondary-fixed: #261900;
+
+  --color-tertiary: #384d37;
+  --color-tertiary-container: #4f654e;
+  --color-tertiary-fixed: #d0e9cc;
+
+  --color-surface: #f5fbf5;
+  --color-surface-dim: #d5dcd6;
+  --color-surface-bright: #f5fbf5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff5ef;
+  --color-surface-container: #e9efea;
+  --color-surface-container-high: #e4eae4;
+  --color-surface-container-highest: #dee4de;
+
+  --color-inverse-surface: #2c322e;
+  --color-inverse-on-surface: #ecf2ed;
+  --color-outline: #707a6e;
+  --color-outline-variant: #bfc9bc;
+  --color-on-surface: #171d1a;
+  --color-on-surface-variant: #40493f;
+  --color-error-container: #ffdad6;
+
+  --font-display-hero: 'Bodoni Moda', Georgia, serif;
+  --font-headline-lg: 'Bodoni Moda', Georgia, serif;
+  --font-headline-md: 'Bodoni Moda', Georgia, serif;
+  --font-headline-sm: 'Bodoni Moda', Georgia, serif;
+  --font-body-lg: 'Inter Tight', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body-md: 'Inter Tight', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body-sm: 'Inter Tight', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-title-lg: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-title-md: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Glassmorphism, animations and effects */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 36px rgba(0, 20, 10, 0.35);
+}
+
+.glass-dark {
+  background: rgba(12, 28, 19, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.sq-field {
+  position: absolute;
+  inset: 0;
+  background-size: 56px 56px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  pointer-events: none;
+}
+
+.notched-card {
+  position: relative;
+  background: radial-gradient(130% 120% at 50% 0%, rgba(255,255,255,0.95) 0%, rgba(245,251,245,0.98) 100%);
+  mask-image: radial-gradient(circle at 0px center, transparent 11px, black 12px), radial-gradient(circle at 100% center, transparent 11px, black 12px);
+  -webkit-mask-image: radial-gradient(circle at 0px center, transparent 11px, black 12px), radial-gradient(circle at 100% center, transparent 11px, black 12px);
+}
+
+@keyframes driftA {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(38px, -14px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+@keyframes driftB {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-46px, 18px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+.drift-a { animation: driftA 18s ease-in-out infinite; will-change: transform; }
+.drift-b { animation: driftB 22s ease-in-out infinite; will-change: transform; }
+
+@keyframes fall {
+  0% { transform: translate3d(0, -30px, 0) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.85; }
+  85% { opacity: 0.7; }
+  100% { transform: translate3d(var(--tx, 40px), 360px, 0) rotate(var(--rot, 360deg)); opacity: 0; }
+}
+
+.petal {
+  position: absolute;
+  background: radial-gradient(circle at 35% 35%, rgba(253, 222, 163, 0.95), rgba(135, 217, 144, 0.45));
+  border-radius: 65% 15% 70% 20% / 60% 30% 70% 35%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  animation: fall var(--dur, 6s) linear infinite;
+}
